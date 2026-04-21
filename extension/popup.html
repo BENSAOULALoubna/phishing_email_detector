@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Detector</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 300px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0f1117;
+      color: #e8eaf0;
+      font-size: 13px;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────────── */
+    .header {
+      padding: 16px 18px 14px;
+      background: linear-gradient(135deg, #1a1d26 0%, #0f1117 100%);
+      border-bottom: 1px solid #1e2130;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .header-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+
+    .header-sub {
+      font-size: 11px;
+      color: #7a7f94;
+      margin-top: 1px;
+    }
+
+    /* ── Status card ─────────────────────────────────────────────────────── */
+    .status-card {
+      margin: 14px 14px 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #161923;
+      border: 1px solid #1e2130;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .status-row:last-child { margin-bottom: 0; }
+
+    .status-key {
+      color: #7a7f94;
+      font-size: 11.5px;
+    }
+
+    .status-val {
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .dot-green { background: #27ae60; box-shadow: 0 0 6px #27ae60; }
+    .dot-orange { background: #f39c12; box-shadow: 0 0 6px #f39c12; }
+    .dot-gray { background: #555; }
+
+    /* ── Toggle section ──────────────────────────────────────────────────── */
+    .section {
+      margin: 12px 14px 0;
+    }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #4a4f64;
+      margin-bottom: 8px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      background: #161923;
+      border: 1px solid #1e2130;
+      border-radius: 7px;
+      margin-bottom: 6px;
+    }
+
+    .toggle-label {
+      font-size: 12.5px;
+      color: #c8cad8;
+    }
+
+    .toggle-sub {
+      font-size: 10.5px;
+      color: #555;
+      margin-top: 1px;
+    }
+
+    /* iOS-style toggle */
+    .toggle-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: #2a2d3a;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #555;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: #27ae60;
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(16px);
+      background: #fff;
+    }
+
+    /* ── Dummy mode notice ───────────────────────────────────────────────── */
+    .notice {
+      margin: 10px 14px 0;
+      padding: 9px 11px;
+      background: #1a1507;
+      border: 1px solid #3d2e05;
+      border-radius: 7px;
+      font-size: 11px;
+      color: #a07a30;
+      line-height: 1.5;
+    }
+
+    .notice strong { color: #c99a3a; }
+    .notice code {
+      font-family: 'Courier New', monospace;
+      background: rgba(255,255,255,0.06);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 10.5px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    .footer {
+      margin: 14px 14px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-meta {
+      font-size: 10.5px;
+      color: #383c50;
+    }
+
+    .btn-rescan {
+      padding: 6px 13px;
+      border-radius: 6px;
+      background: #1d3557;
+      color: #a8c7f0;
+      border: 1px solid #2a4a7a;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-rescan:hover {
+      background: #2563a8;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-icon">🛡️</div>
+    <div>
+      <div class="header-title">Phishing Detector</div>
+      <div class="header-sub">Auto-analyzes emails in Gmail &amp; Outlook</div>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-row">
+      <span class="status-key">Backend</span>
+      <span class="status-val" id="backend-status">
+        <span class="dot dot-orange"></span>Checking…
+      </span>
+    </div>
+    <div class="status-row">
+      <span class="status-key">Mode</span>
+      <span class="status-val" id="mode-val">—</span>
+    </div>
+    <div class="status-row">
+      <span class="status-key">Active on</span>
+      <span class="status-val" id="platform-val">—</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Settings</div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-label">Auto-scan emails</div>
+        <div class="toggle-sub">Analyze as soon as email opens</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-auto" checked />
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-label">Show on legitimate emails</div>
+        <div class="toggle-sub">Display green badge for safe emails</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-show-legit" checked />
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="notice" id="dummy-notice" style="display:none">
+    <strong>Demo mode active.</strong> Connect <code>localhost:5000</code> and set
+    <code>DUMMY_MODE: false</code> in <code>content.js</code> to use the real ML model.
+  </div>
+
+  <div class="footer">
+    <span class="footer-meta" id="footer-meta">v1.0.0</span>
+    <button class="btn-rescan" id="btn-rescan">↺ Re-scan</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
