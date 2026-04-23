@@ -42,7 +42,7 @@ async function checkBackend() {
 
 function loadSettings(callback) {
   chrome.storage.sync.get(
-    { autoScan: true, showLegit: true, dummyMode: true },
+    { autoScan: true, showLegit: true, dummyMode: false },
     callback
   );
 }

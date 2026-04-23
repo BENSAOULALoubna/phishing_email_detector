@@ -1,6 +1,4 @@
-# Member 3 — Chrome Extension (replaces frontend/)
 
-> **Replaces** the original `frontend/index.html` + `script.js` + `style.css` deliverable.
 > The extension detects phishing automatically when the user opens an email — no copy-pasting needed.
 
 ---
@@ -51,57 +49,6 @@ python generate_icons.py
 
 ---
 
-## Demo mode (Days 1–4, before model is ready)
-
-`content.js` ships with `DUMMY_MODE: true`. This means:
-- The extension works **fully** without a Flask server
-- It uses a local regex-based fake predictor that matches Member 2's response schema exactly
-- A **"DEMO MODE"** badge appears in the overlay so testers know it's not real
-
----
-
-## Switching to the real model (Day 5)
-
-Once Member 2's `app.py` is running:
-
-1. Open `content.js`
-2. Change line 19:
-   ```js
-   // Before:
-   DUMMY_MODE: true,
-   // After:
-   DUMMY_MODE: false,
-   ```
-3. Start the Flask server:
-   ```bash
-   python backend/app.py
-   ```
-4. Reload the extension at `chrome://extensions` → click the ↺ button
-
-The extension calls the **exact same `/predict` endpoint** as the original frontend, sending:
-```json
-{ "email_text": "..." }
-```
-And expects Member 2's schema back:
-```json
-{
-  "label": "Phishing" | "Legitimate",
-  "confidence": 87.3,
-  "features": {
-    "url_count": 4,
-    "urgent_keyword_count": 3,
-    "has_http_only": 1,
-    "has_ip_url": 0,
-    "exclamation_count": 5,
-    "suspicious_url_keywords": 1,
-    "has_form_tag": 0,
-    "link_to_text_ratio": 0.12
-  }
-}
-```
-**No changes to Member 2's code are needed.**
-
----
 
 ## Backend compatibility note
 
@@ -113,14 +60,3 @@ from flask_cors import CORS
 CORS(app)
 ```
 
----
-
-## Testing checklist (Day 5)
-
-- [ ] Load extension in Chrome developer mode
-- [ ] Open Gmail → open a real email → overlay appears
-- [ ] Paste phishing email from phishtank.com → red "Likely Phishing" overlay
-- [ ] Open a normal email → green "Looks Legitimate" overlay
-- [ ] Click ↺ Re-scan in popup → overlay refreshes
-- [ ] Toggle "Show on legitimate emails" off → green overlay hidden
-- [ ] Disable `DUMMY_MODE`, start `python backend/app.py`, verify real predictions

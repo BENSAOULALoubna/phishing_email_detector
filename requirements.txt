@@ -134,3 +134,5 @@ wheel==0.45.1
 widgetsnbextension==4.0.15
 win-inet-pton @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/win_inet_pton_1699472992992/work
 yellowbrick @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/yellowbrick_1699570464883/work
+Flask==3.0.0
+Flask-CORS==4.0.0
