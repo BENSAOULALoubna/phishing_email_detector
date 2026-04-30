@@ -136,3 +136,4 @@ win-inet-pton @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/wi
 yellowbrick @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/yellowbrick_1699570464883/work
 Flask==3.0.0
 Flask-CORS==4.0.0
+gunicorn        
