@@ -3,7 +3,7 @@
  * Displays backend status, current platform, and settings toggles.
  */
 
-const BACKEND_URL = "http://localhost:5000/predict";
+const BACKEND_URL = "https://phishing-detector-backend-j3pu.onrender.com/predict";
 
 // ─── Detect platform from current tab ────────────────────────────────────────
 
