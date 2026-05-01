@@ -45,7 +45,7 @@ python generate_icons.py
 1. Go to `chrome://extensions`
 2. Enable **Developer mode** (top-right toggle)
 3. Click **Load unpacked**
-4. Select this `phishing-extension/` folder
+4. Select this `extension/` folder
 
 ---
 
