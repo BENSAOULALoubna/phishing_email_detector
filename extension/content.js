@@ -16,7 +16,7 @@
 
 const CONFIG = {
   DUMMY_MODE: false,
-  BACKEND_URL: "http://localhost:5000/predict",
+  BACKEND_URL: "https://phishing-detector-backend-j3pu.onrender.com/predict",
   // How long to wait after DOM change before re-scanning (debounce ms)
   DEBOUNCE_MS: 150,
   // Minimum characters to consider a real email body
