@@ -15,11 +15,10 @@
 // ─── Config ──────────────────────────────────────────────────────────────────
 
 const CONFIG = {
-  // Set to false once Member 2's Flask server is running (Day 5)
-  DUMMY_MODE: true,
-  BACKEND_URL: "http://localhost:5000/predict",
+  DUMMY_MODE: false,
+  BACKEND_URL: "https://phishing-detector-backend-j3pu.onrender.com/predict",
   // How long to wait after DOM change before re-scanning (debounce ms)
-  DEBOUNCE_MS: 600,
+  DEBOUNCE_MS: 150,
   // Minimum characters to consider a real email body
   MIN_TEXT_LENGTH: 40,
 };
@@ -296,8 +295,5 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
-
-if (PLATFORM !== "unknown") {
-  // Gmail loads its JS lazily, so wait a moment before starting
-  setTimeout(startObserver, 1500);
-}
+startObserver();                      // scans immediately + starts observer
+setTimeout(scanIfEmailOpen, 800);     // one retry for slow Gmail body renders

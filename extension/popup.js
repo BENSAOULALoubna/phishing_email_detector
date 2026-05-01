@@ -3,7 +3,7 @@
  * Displays backend status, current platform, and settings toggles.
  */
 
-const BACKEND_URL = "http://localhost:5000/predict";
+const BACKEND_URL = "https://phishing-detector-backend-j3pu.onrender.com/predict";
 
 // ─── Detect platform from current tab ────────────────────────────────────────
 
@@ -42,7 +42,7 @@ async function checkBackend() {
 
 function loadSettings(callback) {
   chrome.storage.sync.get(
-    { autoScan: true, showLegit: true, dummyMode: true },
+    { autoScan: true, showLegit: true, dummyMode: false },
     callback
   );
 }

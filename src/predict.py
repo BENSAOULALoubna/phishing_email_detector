@@ -2,7 +2,8 @@ import joblib, os
 from src.feature_extractor import extract_features
 
 def predict(text):
-    model = joblib.load('../outputs/model.pkl')
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'outputs', 'model.pkl')
+    model = joblib.load(model_path)
     vec, manual = extract_features(text)
     vec = vec.reshape(1, -1)
     label_int = model.predict(vec)[0]
