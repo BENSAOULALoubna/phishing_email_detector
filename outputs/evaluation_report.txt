@@ -1,1 +1,34 @@
+Phishing Email Detector — Model Evaluation Report
+==================================================
 
+Model Comparison
+----------------
+Model                    Accuracy         F1
+--------------------------------------------
+Logistic Regression         0.967      0.953
+Random Forest               0.985      0.979
+
+Selected Model: Random Forest
+Reason: Higher F1 score (0.979 vs 0.953), meaning fewer missed phishing emails.
+
+Confusion Matrix (Random Forest)
+---------------------------------
+                  Predicted Legit    Predicted Phishing
+Actual Legit               483                 6
+Actual Phishing              6               282
+
+Breakdown
+---------
+True Negatives  (TN): 483  — legitimate emails correctly identified
+True Positives  (TP): 282  — phishing emails correctly caught
+False Positives (FP):   6  — legitimate emails wrongly flagged as phishing
+False Negatives (FN):   6  — phishing emails missed
+
+Overall Performance
+-------------------
+Total test samples : 777
+Correctly classified: 765
+Misclassified       : 12
+Final Accuracy      : 98.5%
+
+Final F1 Score      : 0.979
